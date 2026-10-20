@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f36b21">
+    <title>Stream Loader</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="wordmark" href="#" aria-label="Fiserv home">fiserv<span>.</span></a>
+        <div class="product-name">
+          <strong>Stream Loader</strong>
+          <span>Archive recovery &amp; database loading</span>
+        </div>
+        <span class="environment-tag">LOWER ENVIRONMENTS</span>
+      </header>
+
+      <main class="main-content">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">DATA OPERATIONS</p>
+            <h1 id="page-title">New stream load</h1>
+            <p class="intro" id="page-description">Choose a destination and application to get started.</p>
+          </div>
+          <span class="source-label"><span class="source-dot"></span> Source: Production archive</span>
+        </div>
+
+        <form id="load-form" novalidate>
+          <div class="selection-grid">
+            <section class="panel selection-panel">
+              <fieldset>
+                <legend><span class="step-number">1</span><span>Environment</span></legend>
+                <div class="radio-options">
+                  <label class="radio-card"><input type="radio" name="environment" value="DEV"><span class="radio-indicator"></span><span><strong>Dev</strong><small>Development environment</small></span></label>
+                  <label class="radio-card"><input type="radio" name="environment" value="QA"><span class="radio-indicator"></span><span><strong>QA</strong><small>Quality assurance</small></span></label>
+                </div>
+              </fieldset>
+            </section>
+
+            <section class="panel selection-panel">
+              <fieldset id="application-options" disabled>
+                <legend><span class="step-number">2</span><span>Application</span></legend>
+                <div class="radio-options">
+                  <label class="radio-card"><input type="radio" name="application" value="SPS"><span class="radio-indicator"></span><span><strong>SPS</strong><small>Stream processing</small></span></label>
+                  <label class="radio-card"><input type="radio" name="application" value="FSAMS"><span class="radio-indicator"></span><span><strong>FSAMS</strong><small>Financial services</small></span></label>
+                </div>
+              </fieldset>
+            </section>
+          </div>
+
+          <section class="panel details-panel">
+            <fieldset id="stream-details" disabled>
+              <legend><span class="step-number">3</span><span>Stream details</span></legend>
+              <div class="field-grid">
+                <label class="field"><span>Stream name</span><select name="stream" required><option value="">Select a stream</option></select></label>
+                <label class="field"><span>Platform</span><select name="platform" required><option value="">Select a platform</option><option>Platform A</option><option>Platform B</option></select></label>
+                <label class="field"><span>Cut</span><select name="cut" required><option value="">Select a cut</option><option>01</option><option>02</option><option>03</option></select></label>
+                <label class="field"><span>Work-of date</span><input id="current-date" name="date" type="date" required></label>
+              </div>
+            </fieldset>
+          </section>
+
+          <div class="form-actions"><span class="helper-text">Select the environment and application to continue.</span><button id="review-button" class="button button-primary" type="submit" disabled>Review load <span aria-hidden="true">→</span></button></div>
+        </form>
+
+        <section id="review-panel" class="panel review-panel" hidden>
+          <div class="section-heading"><div><p class="eyebrow">FINAL CHECK</p><h2>Confirm load details</h2></div><span class="review-badge">REVIEW</span></div>
+          <div id="review-summary" class="summary-grid"></div>
+          <div id="target-notice" class="notice"></div>
+          <div class="review-actions"><label class="check-option"><input type="checkbox" id="logs-on-start"><span>Show live logs when loading starts</span></label><div class="button-row"><button class="button button-secondary" id="edit-button" type="button">Edit details</button><button class="button button-primary" id="start-button" type="button">Confirm &amp; start load</button></div></div>
+        </section>
+
+        <section id="job-panel" hidden aria-label="Load activity">
+          <section class="panel progress-panel">
+            <div class="progress-heading"><div><p class="eyebrow">LOAD ACTIVITY</p><h2 id="current-step" aria-live="polite">Validating request</h2></div><span id="job-status" class="status-pill status-running">RUNNING</span></div>
+            <div class="job-meta" id="job-meta"></div>
+            <div id="progress-track" class="progress-track" role="progressbar" aria-label="Completed loading stages" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"><div id="progress-fill" class="progress-fill"></div></div>
+            <p class="progress-caption" id="progress-caption">0 of 6 stages complete</p>
+            <ol id="stage-list" class="stage-list" aria-label="Load stages"></ol>
+            <div class="job-footer"><span id="request-id" class="muted">Demo request</span><label class="check-option"><input type="checkbox" id="show-logs"><span>Show live logs</span></label></div>
+          </section>
+
+          <section id="result-panel" class="panel result-panel" hidden aria-live="polite">
+            <div class="progress-heading"><div><p class="eyebrow">LOAD RESULT</p><h2 id="result-title">Stream loaded successfully</h2></div><span id="stream-status" class="status-pill status-complete">LOADED</span></div>
+            <div id="result-summary" class="summary-grid"></div>
+            <div class="result-footer"><p id="result-note" class="muted"></p><button class="button button-secondary" id="new-load-button" type="button">Start another load</button></div>
+          </section>
+
+          <section id="logs-panel" class="panel logs-panel" hidden>
+            <div class="logs-heading"><div><p class="eyebrow">JOB OUTPUT</p><h2>Live logs</h2></div><span id="log-state" class="muted">Updating during load</span></div>
+            <pre id="log-output" aria-label="Job log output"></pre>
+          </section>
+        </section>
+      </main>
+      <footer class="app-footer"><span>Stream Loader</span><span>Interactive UI preview · sample data only</span></footer>
+    </div>
+  </body>
+</html>
